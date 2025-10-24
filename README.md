@@ -106,7 +106,7 @@ India, Germany, and Canada exhibit strong YoY user growth (>900%), indicating ma
 Satisfaction Analysis:
 Average satisfaction of 7.1 across both free and paid users — opportunity to enhance AI mentor quality.
 
-💡 Business Recommendations
+💡Business Recommendations
 
 Conversion Strategy: Introduce personalized discount offers for highly engaged free users.
 
