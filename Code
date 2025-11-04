@@ -1,0 +1,210 @@
+# This file showcase the code used for the freemium to premium analysis
+
+# Platform user analytics 
+# Impprting Libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+sns.set_style("whitegrid")
+plt.rcParams['figure.figsize'] = (10,6)
+
+#Loading the Dataset
+data = pd.read_csv('SkillMinds_AI_synthetic_50000.csv')
+
+# Preprocessing and EDA
+
+data.info()
+
+# Checking for missing values 
+
+missing = data.isnull().sum()
+print(missing)
+
+
+missing_percentage = (missing / len(data) * 100).round(2)
+print(missing_percentage)  
+
+
+missing_df = pd.DataFrame({'Missing Count': missing, 'Missing %': missing_percentage})
+missing_df
+
+# Ignored the coverison date null values. The null values in coversion date column simply represent that these users haven't opted for paid membership subscription.
+
+
+#Checking for duplicate user_ids
+duplicates = data.duplicated().sum()
+print(f"dupilicates rows: {duplicates}")
+
+data['monthly_usage_hrs'].describe()
+
+# Feature Engineering
+data['signup_date'] = pd.to_datetime(data['signup_date'])
+data['conversion_date'] = pd.to_datetime(data['conversion_date'])
+
+
+#Plotting the monthly usage hours to check for outliers.
+sns.boxplot(x=data['monthly_usage_hrs'])
+plt.title("Monthly Usage Hours - Boxplot")
+plt.show()
+
+# Most of the users have low monthly usage as indicated in the boxplot within the dataset. There are high number of outliers indicating that many users with unsually high monthly usage
+
+# Doing a quick check for Monthly user hours 
+
+data['monthly_usage_hrs'].describe()
+
+
+Q1 = data['monthly_usage_hrs'].quantile(0.25)
+Q3 = data['monthly_usage_hrs'].quantile(0.75)
+IQR = Q3 - Q1
+lower_bound = Q1 - 1.5*IQR
+upper_bound = Q3 + 1.5*IQR
+outliers = data[(data['monthly_usage_hrs'] < Q1 - 1.5*IQR) | (data['monthly_usage_hrs'] > Q3 + 1.5*IQR)]
+len(outliers)
+
+# Number of outliers with unsual high monthly usage are 3120.
+
+# Checking the outliers 
+outliers['monthly_usage_hrs'].describe()
+sns.histplot(data['monthly_usage_hrs'], bins=50)
+plt.xlim(0, 20)
+plt.show()
+
+# Statistically, most of the users from the outliers are heavy users which fall between 15 to 20 hours monthly usage. This can be considered as realistically possible.
+
+# Doing a quick check on messages sent
+data['messages_sent'].describe()
+
+Q1 = data['messages_sent'].quantile(0.25)
+Q3 = data['messages_sent'].quantile(0.75)
+IQR = Q3-Q1
+print(IQR)
+lower_bound = Q1 - 1.5*IQR
+upper_bound = Q3 + 1.5*IQR
+print(lower_bound)
+print(upper_bound)
+outliers = data[(data['messages_sent'] < lower_bound) | (data['messages_sent'] > upper_bound)]
+len(outliers)
+
+# Outliers - 4288
+
+# Visualizing messages sent 
+sns.boxplot(x=data['messages_sent'])
+plt.title("Messages Sent - Boxplot")
+plt.show()
+
+# checking & Visualizing Satisfaction score
+data.groupby('final_plan')['satisfaction_score'].describe()
+sns.countplot(x='satisfaction_score', data=data)
+plt.title("Satisfaction Score Distribution")
+plt.show()
+
+# Checking for anamolies for further analysis 
+data['user_segment'].value_counts()
+data['initial_plan'].value_counts()
+data['final_plan'].value_counts()
+data['country'].value_counts()
+data['converted'] = (np.where(data['final_plan'] == 'Paid', 1,0))
+data['active_days'] = data["months_active"]*30
+
+#Visualizing the Plan Distribution
+sns.countplot(x="final_plan", data=data)
+plt.title("Plan Type Distribution")
+
+#Visualizing Monthly usage distribution 
+sns.histplot(data["monthly_usage_hrs"], kde=True)
+plt.title("Monthly Usage Distribution")
+
+#Visualizing User segment distribution
+sns.countplot(y="user_segment", data=data, order=data["user_segment"].value_counts().index)
+plt.title("User Segment Distribution")
+
+# Checking satisfaction score for free to paid analysis
+data.groupby('final_plan')['satisfaction_score'].describe()
+sns.boxplot(x="final_plan", y="satisfaction_score", data=data)
+sns.histplot(data["satisfaction_score"], bins=10, kde=True)
+
+#Visualizing the customers by country
+sns.countplot(y="country", data=data, order=data["country"].value_counts().head(10).index)
+
+#Checking the converted users
+sns.barplot(x="user_segment", y="converted", data=data)
+
+# Visualizing the scatter plot for satisfaction score as per free and paid users.
+sns.scatterplot(x="monthly_usage_hrs", y="satisfaction_score", hue="final_plan", data=data)
+
+#Checking correlation
+sns.heatmap(data.corr(numeric_only=True), cmap="coolwarm", annot=False)
+
+px.scatter(data, x="monthly_usage_hrs", y="satisfaction_score",
+           color="user_segment", size="messages_sent",
+           hover_data=["country", "final_plan"])
+
+
+# Freemium to Paid Conversion Analysis
+
+#Calculating Conversion Rate
+conversion_rate = data["converted"].mean() * 100
+print(f"Overall Conversion Rate: {conversion_rate:.2f}%")
+
+#Calculating Activation Rate
+data['activated'] = ((data['initial_plan'] == 'Free') & (data['final_plan'] != 'Free'))
+activation_rate = data['activated'].mean() * 100
+print(f"Activation Rate (Free → Paid): {activation_rate:.2f}%")
+
+#Visualizing the conversion rate by user segment
+seg_conv = data.groupby("user_segment")["converted"].mean().sort_values(ascending=False) * 100
+seg_conv.plot(kind='bar', color='teal', title="Conversion Rate by Segment")
+
+#Checking & Visualizing groupby
+data.groupby('converted')['monthly_usage_hrs'].describe()
+plt.figure(figsize=(10,6))
+sns.boxplot(x='converted', y='monthly_usage_hrs', data=data)
+plt.title('Monthly Usage Hours vs Conversion')
+plt.xlabel('Converted (0=Free, 1=Paid)')
+plt.ylabel('Monthly Usage Hours')
+plt.show()
+
+# Messages sent v/s conversion
+plt.figure(figsize=(10,6))
+sns.boxplot(x='converted', y='messages_sent', data=data)
+plt.title('Messages Sent vs Conversion')
+plt.xlabel('Converted (0=Free, 1=Paid)')
+plt.ylabel('Messages Sent per Month')
+plt.show()
+
+#Usage v/s Messages sent v/s conversion
+plt.figure(figsize=(10,6))
+sns.scatterplot(data=data, x='monthly_usage_hrs', y='messages_sent', hue='converted', alpha=0.6)
+plt.title('Usage vs Messages Sent by Conversion Status')
+plt.xlabel('Monthly Usage Hours')
+plt.ylabel('Messages Sent')
+plt.show()
+
+
+data['days_to_convert'] = (data['conversion_date'] - data['signup_date']).dt.days
+converted_users['days_to_convert'].describe()
+
+converted_users = data[data['converted'] == 1]
+
+plt.figure(figsize=(10,6))
+sns.histplot(converted_users['days_to_convert'], bins=30, kde=True, color='teal')
+plt.title('Distribution of Days to Convert (Paid Users)')
+plt.xlabel('Days from Signup to Conversion')
+plt.ylabel('Number of Users')
+plt.show()
+
+
+#Brief view of conversion funnel
+funnel_data = {
+    'Stage': ['Total Users', 'Free Users', 'Paid Users'],
+    'Count': [len(data), len(data[data['converted']==0]), len(data[data['converted']==1])]
+}
+funnel_df = pd.DataFrame(funnel_data)
+
+plt.figure(figsize=(8,5))
+sns.barplot(data=funnel_df, x='Stage', y='Count', palette='Blues_r')
+plt.title('Freemium to Paid Conversion Funnel')
+plt.show()
