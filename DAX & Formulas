@@ -1,0 +1,76 @@
+# This file I have created to showcase the DAX and column calculations
+
+Total Users = 
+DISTINCTCOUNT(SkillMinds_AI_synthetic_50000[User ID])
+
+Total Conversion = 
+Divide(
+    [Paid Active Users],
+    [Total Users])
+
+Y-O-Y Growth % = 
+DIVIDE(
+    [Total Users] - [Signup Previous Year],
+    [Signup Previous Year],0
+)
+
+Signup Previous Year = 
+CALCULATE(
+    [Total Users],
+    SAMEPERIODLASTYEAR('Date Table'[Date]
+    ))
+
+Paid Churned Users = CALCULATE([Churned Users], SkillMinds_AI_synthetic_50000[final plan] = "Paid")
+
+Paid Active Users = 
+Calculate(
+    DISTINCTCOUNT(SkillMinds_AI_synthetic_50000[User ID]),
+    SkillMinds_AI_synthetic_50000[final plan] = "Paid",
+    Filter(
+        SkillMinds_AI_synthetic_50000,
+        SkillMinds_AI_synthetic_50000[messages sent] > 0
+        || SkillMinds_AI_synthetic_50000[months active] > 0
+        || SkillMinds_AI_synthetic_50000[prompt count] > 0
+)
+)
+
+Free Users = 
+Calculate(
+DISTINCTCOUNT(SkillMinds_AI_synthetic_50000[User ID]),
+SkillMinds_AI_synthetic_50000[final plan] = "Free",
+ Filter(
+        SkillMinds_AI_synthetic_50000,
+        SkillMinds_AI_synthetic_50000[messages sent] > 0
+        || SkillMinds_AI_synthetic_50000[months active] > 0
+        || SkillMinds_AI_synthetic_50000[prompt count] > 0
+)
+)
+
+Free Churned Users = Calculate([Churned Rate],SkillMinds_AI_synthetic_50000[final plan] = "Free")
+
+Churned Users = 
+Calculate(
+    DISTINCTCOUNT(SkillMinds_AI_synthetic_50000[User ID]),
+    SkillMinds_AI_synthetic_50000[churned]
+)
+
+Churned Rate = 
+Divide(
+    [Churned Users],[Total Users], 0
+)
+
+Avg Satisfaction Score = AVERAGE(SkillMinds_AI_synthetic_50000[satisfaction score])
+
+# Date Table created
+
+Date Table = 
+ADDCOLUMNS(
+    CALENDARAUTO(),
+    "Year",YEAR([Date]),
+    "MonthNum",Month([Date]),
+    "Month",FORMAT([Date], "mmm"),
+    "Weekday",FORMAT([Date], "ddd"),
+    "WeekNumber", Weekday([Date], 2),
+    "Quart", format([Date], "\QQ")
+)
+    
