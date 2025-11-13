@@ -1,0 +1,31 @@
+## Business Problem
+
+Online learning platforms often struggle with low course completion rates and inconsistent learner engagement. The goal of this project was to identify user behavior patterns and engagement metrics that could inform retention and conversion strategies.
+
+## Analytical Approach
+
+Conducted cohort and funnel analysis on learner activity data (synthetic dataset simulating 10K+ users).
+
+Used SQL for data cleaning and segmentation; Python (Pandas, Matplotlib) for analysis and visualization.
+
+Built an interactive Power BI dashboard to track retention, conversion, and engagement KPIs across cohorts.
+
+## Key Insights
+
+Identified a 30–40% learner drop-off during the first week of course enrollment.
+
+Discovered that users with 5+ weekly sessions had a 2.5x higher completion rate.
+
+Found that engagement spiked when users interacted with community features and peer feedback modules.
+
+## Business Impact (Modeled on Analysis)
+
+Recommended personalized course reminders and milestone badges that could potentially improve retention by ~15%.
+
+Proposed a tiered pricing strategy based on engagement duration (e.g., 15–20 hrs/week users likely to convert to premium plans).
+
+Designed a dashboard framework for continuous tracking of user engagement KPIs — scalable to real-world e-learning systems.
+
+## Tools Used
+
+SQL | Python (Pandas, Matplotlib) | Power BI | Google Colab
