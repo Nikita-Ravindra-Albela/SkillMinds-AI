@@ -3,24 +3,13 @@
 Total Users = 
 DISTINCTCOUNT(SkillMinds_AI_synthetic_50000[User ID])
 
-Total Conversion = 
-Divide(
-    [Paid Active Users],
-    [Total Users])
-
-Y-O-Y Growth % = 
-DIVIDE(
-    [Total Users] - [Signup Previous Year],
-    [Signup Previous Year],0
-)
-
-Signup Previous Year = 
-CALCULATE(
-    [Total Users],
-    SAMEPERIODLASTYEAR('Date Table'[Date]
-    ))
-
+Free Churned Users = Calculate([Churned Rate],SkillMinds_AI_synthetic_50000[final plan] = "Free")
 Paid Churned Users = CALCULATE([Churned Users], SkillMinds_AI_synthetic_50000[final plan] = "Paid")
+
+Churned Users = 
+Calculate(
+    DISTINCTCOUNT(SkillMinds_AI_synthetic_50000[User ID]),
+    SkillMinds_AI_synthetic_50000[churned]
 
 Paid Active Users = 
 Calculate(
@@ -46,18 +35,32 @@ SkillMinds_AI_synthetic_50000[final plan] = "Free",
 )
 )
 
-Free Churned Users = Calculate([Churned Rate],SkillMinds_AI_synthetic_50000[final plan] = "Free")
-
-Churned Users = 
-Calculate(
-    DISTINCTCOUNT(SkillMinds_AI_synthetic_50000[User ID]),
-    SkillMinds_AI_synthetic_50000[churned]
-)
+Total Conversion = 
+Divide(
+    [Paid Active Users],
+    [Total Users])
 
 Churned Rate = 
 Divide(
     [Churned Users],[Total Users], 0
 )
+
+Y-O-Y Growth % = 
+DIVIDE(
+    [Total Users] - [Signup Previous Year],
+    [Signup Previous Year],0
+)
+
+Signup Previous Year = 
+CALCULATE(
+    [Total Users],
+    SAMEPERIODLASTYEAR('Date Table'[Date]
+    ))
+
+
+)
+
+
 
 Avg Satisfaction Score = AVERAGE(SkillMinds_AI_synthetic_50000[satisfaction score])
 
