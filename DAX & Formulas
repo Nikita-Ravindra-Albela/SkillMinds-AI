@@ -3,13 +3,15 @@
 Total Users = 
 DISTINCTCOUNT(SkillMinds_AI_synthetic_50000[User ID])
 
-Free Churned Users = Calculate([Churned Rate],SkillMinds_AI_synthetic_50000[final plan] = "Free")
-Paid Churned Users = CALCULATE([Churned Users], SkillMinds_AI_synthetic_50000[final plan] = "Paid")
-
 Churned Users = 
 Calculate(
     DISTINCTCOUNT(SkillMinds_AI_synthetic_50000[User ID]),
     SkillMinds_AI_synthetic_50000[churned]
+
+Churned Rate = 
+Divide(
+    [Churned Users],[Total Users], 0
+)
 
 Paid Active Users = 
 Calculate(
@@ -35,15 +37,15 @@ SkillMinds_AI_synthetic_50000[final plan] = "Free",
 )
 )
 
+Free Churned Users = Calculate([Churned Rate],SkillMinds_AI_synthetic_50000[final plan] = "Free")
+Paid Churned Users = CALCULATE([Churned Users], SkillMinds_AI_synthetic_50000[final plan] = "Paid")
+
 Total Conversion = 
 Divide(
     [Paid Active Users],
     [Total Users])
 
-Churned Rate = 
-Divide(
-    [Churned Users],[Total Users], 0
-)
+
 
 Y-O-Y Growth % = 
 DIVIDE(
