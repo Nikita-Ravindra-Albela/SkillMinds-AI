@@ -102,7 +102,7 @@ Geographic Insights:
 India, Germany, and Canada exhibit strong YoY user growth (>900%), indicating markets worth scaling.
 
 Satisfaction Analysis:
-Average satisfaction of 7.1 across both free and paid users — opportunity to enhance AI mentor quality.
+Average satisfaction of 7.1 across both free and paid users opportunity to enhance AI mentor quality.
 
 💡Business Recommendations
 
@@ -149,4 +149,4 @@ Geographic and segment analysis identifies India, Germany, and Canada as emergin
 
 AI-driven personalization, targeted pricing, and user retention initiatives could significantly enhance revenue and user lifetime value.
 
-The project demonstrates a complete analytics cycle — from data preprocessing and visualization to business storytelling showcasing how data can guide strategic decisions in SaaS and EdTech environments.
+The project demonstrates a complete analytics cycle from data preprocessing and visualization to business storytelling showcasing how data can guide strategic decisions in SaaS and EdTech environments.
