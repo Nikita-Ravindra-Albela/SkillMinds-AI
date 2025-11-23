@@ -5,7 +5,7 @@ SkillMinds AI is an AI-driven learning and upskilling platform designed to empow
 
 The platform operates on a freemium-to-paid model, providing users free access to foundational courses and chatbot-based support, while offering paid access to advanced certifications, mentor sessions, and career dashboards.
 
-This project analyzes user engagement behavior, satisfaction, and conversion patterns to uncover the key drivers that influence free-to-paid subscription transitions.
+This project analyzes yearly user engagement behavior, satisfaction, and conversion patterns to uncover the key drivers that influence free-to-paid subscription transitions.
 
 🎯 Project Objectives 
 
