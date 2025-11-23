@@ -1,4 +1,4 @@
-# SkillMinds AI Classes
+## SkillMinds AI Classes
 🧩 Project Overview
 
 SkillMinds AI is an AI-driven learning and upskilling platform designed to empower students, professionals, and organizations through personalized learning paths, AI mentorship, and certification-based career advancement.
@@ -112,7 +112,7 @@ Retention: Implement AI-driven reactivation prompts for inactive users.
 
 Pricing Optimization: Introduce regional pricing and career bundles for students/job seekers.
 
-Product Enhancement: Increase AI chatbot guidance in advanced courses to boost satisfaction.
+Product Enhancement: Increase AI chatbot guidance in advanced courses to boost satisfaction. A simple free prompt teaching course could substainly decrease the computational costs of AI prompts and messages sent from students to understand the topics in the courses. 
 
 Marketing Focus: Target high-growth countries (India, Germany, Canada) with localized campaigns.
 
