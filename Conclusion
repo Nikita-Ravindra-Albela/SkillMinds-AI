@@ -1,33 +1,20 @@
-## Business Problem
+## What Business Problems Did This Dashboard Solve? 
 
-Online learning platforms often struggle with low course completion rates and inconsistent learner engagement. The goal of this project was to identify user behavior patterns and engagement metrics that could inform retention and conversion strategies.
+1 Free users churn at 12% (vs 6% for paid). This Signals a strong opportunity to improve onboarding and increase conversions.
 
-## Analytical Approach
+2. Micro-subscription plans can unlock a new paying segment. This helps reduce price-barrier drop-offs for students/job seekers.
 
-Conducted cohort and funnel analysis on learner activity data (synthetic dataset simulating 10K+ users).
+3. A/B testing on pricing & course recommendations is essential. Can increase conversion probability and boost LTV.
 
-Used SQL for data cleaning and segmentation; Python (Pandas, Matplotlib) for analysis and visualization.
+4.  Badges & explore more options with personalized recommendations can sustain engagement. Reduces early-stage churn and strengthens retention.
 
-Built an interactive Power BI dashboard to track retention, conversion, and engagement KPIs across cohorts.
+5. A free Prompt Engineering mini-course can attract high-intent learners. Supports AI learning adoption while reducing chatbot costs.
 
-## Key Insights
+## Overall Business Impact of the Insights
 
-Identified a 30–40% learner drop-off during the first week of course enrollment.
-
-Discovered that users with 5+ weekly sessions had a 2.5x higher completion rate.
-
-Found that engagement spiked when users interacted with community features and peer feedback modules.
-
-## Business Impact (Modeled on Analysis)
-
-Funnel and cohort analysis revealed drop-offs that, if addressed, could improve learner retention by ~15%.
-
-Engagement segmentation indicated that highly active users (15–20 hrs/week) were 3× more likely to convert to paid plans.
-
-Proposed a data-driven tiered pricing model projected to increase premium conversions by ~10–12%.
-
-Designed a dashboard framework that could cut reporting time by 40% for product and growth teams through real-time visibility.
-
-## Tools Used
-
-SQL | Python (Pandas, Matplotlib) | Power BI | Google Colab
+Through this analysis, the platform can:
+✔ Reduce churn by addressing user motivations early
+✔ Improve conversion through targeted pricing and content strategies
+✔ Increase retention through engagement-focused features
+✔ Strengthen the learning funnel from free → premium users
+✔ Drive predictable and scalable revenue growth
