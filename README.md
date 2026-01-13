@@ -10,7 +10,7 @@ This project analyzes yearly user engagement behavior, satisfaction, and convers
 🎯 Project Objectives 
 
 Analyze churn drivers among paid and free users.
-
+ 
 Explore satisfaction patterns across user segments.
 
 Simulate business recommendations to improve retention and monetization.
